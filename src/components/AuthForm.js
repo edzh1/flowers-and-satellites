@@ -1,5 +1,5 @@
 import React from 'react';
-import { Field, reduxForm } from 'redux-form';
+import { Field } from 'redux-form';
 import PropTypes from 'prop-types';
 import { authorize } from '../actions/auth';
 
@@ -38,6 +38,4 @@ AuthForm.propTypes = {
   error: PropTypes.string,
 };
 
-export default reduxForm({
-  form: 'auth',
-})(AuthForm);
+export default AuthForm;
