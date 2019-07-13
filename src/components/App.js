@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import { Provider } from 'react-redux';
-import Router from '../router';
+import Router from './Router';
 import store from '../store';
 
 const StyledApp = styled.div`
