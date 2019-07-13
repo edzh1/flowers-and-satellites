@@ -1,7 +1,7 @@
 import { AUTHORIZE_SUCCESS, LOGOUT } from '../constants/AuthActionTypes';
 
 const initialState = {
-  token: localStorage.getItem('token') || '',
+  genericToken: localStorage.getItem('genericToken') || '',
 };
 
 export default function auth(state = initialState, action) {
@@ -9,12 +9,12 @@ export default function auth(state = initialState, action) {
     case AUTHORIZE_SUCCESS:
       return {
         ...state,
-        token: action.payload.access_token,
+        genericToken: action.payload.genericToken,
       };
     case LOGOUT:
       return {
         ...state,
-        token: '',
+        genericToken: '',
       };
     default:
       return state;

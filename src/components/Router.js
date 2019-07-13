@@ -15,13 +15,13 @@ function AppRouter() {
 }
 
 function PrivateRoute({ component: Component, ...rest }) {
-  const token = localStorage.getItem('token');
+  const genericToken = localStorage.getItem('genericToken');
 
   return (
     <Route
       {...rest}
       render={props =>
-        token ? (
+        genericToken ? (
           <Component {...props} />
         ) : (
           <Redirect

@@ -9,12 +9,11 @@ export function* authorize(action) {
 
   try {
     const response = yield call(api.authorize, { login, password });
-    const token = response.access_token;
-    yield put(actions.authorize.success({ token }));
-    localStorage.setItem('token', token);
+    const genericToken = response.access_token;
+    yield put(actions.authorize.success({ genericToken }));
+    localStorage.setItem('genericToken', genericToken);
   } catch (error) {
     const formError = new SubmissionError({
-      login: 'User with this login is not found',
       _error: 'Login failed, please check your credentials and try again',
     });
 
@@ -24,7 +23,7 @@ export function* authorize(action) {
 
 export function* logout() {
   yield put(actions.authorize.logout());
-  localStorage.setItem('token', '');
+  localStorage.setItem('genericToken', '');
 }
 
 export function* watchAuthorize() {
