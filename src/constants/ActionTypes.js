@@ -1,4 +1,11 @@
-export const AUTHORIZE = 'AUTHORIZE';
-export const AUTHORIZE_SUCCESS = 'AUTHORIZE_SUCCESS';
-export const AUTHORIZE_FAILURE = 'AUTHORIZE_FAILURE';
+/* user */
+export const AUTH = 'AUTH';
+export const AUTH_SUCCESS = 'AUTH_SUCCESS';
+export const AUTH_FAILURE = 'AUTH_FAILURE';
 export const LOGOUT = 'LOGOUT';
+
+/* tenant */
+export const TENANT_AUTH_SUCCESS = 'TENANT_AUTH_SUCCESS';
+export const GET_TENANT_SUCCESS = 'GET_TENANT_SUCCESS';
+export const GET_SUBJECT_SUCCESS = 'GET_SUBJECT_SUCCESS';
+export const SUBJECT_LOAD_MORE_SUCCESS = 'SUBJECT_LOAD_MORE_SUCCESS';

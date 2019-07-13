@@ -1,11 +1,11 @@
 import React from 'react';
 import { Field } from 'redux-form';
 import PropTypes from 'prop-types';
-import { authorize } from '../actions/user';
+import { auth } from '../actions/user';
 
 const AuthForm = props => {
   const { handleSubmit, pristine, submitting, error } = props;
-  const submit = handleSubmit(authorize);
+  const submit = handleSubmit(auth);
 
   return (
     <form onSubmit={submit}>

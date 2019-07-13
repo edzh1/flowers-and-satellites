@@ -1,4 +1,4 @@
-import { AUTHORIZE } from '../constants/ActionTypes';
+import { AUTH } from '../constants/ActionTypes';
 import { createFormAction } from 'redux-form-saga';
 
-export const authorize = createFormAction(AUTHORIZE);
+export const auth = createFormAction(AUTH);

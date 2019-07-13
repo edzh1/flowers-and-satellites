@@ -1,7 +1,7 @@
 import { Base64 } from 'js-base64';
 
 export const api = {
-  authorize({ login, password }) {
+  auth({ login, password }) {
     const credentials = Base64.encode(`${login}:${password}`);
 
     return fetch('https://api.cogniac.io/1/token', {
