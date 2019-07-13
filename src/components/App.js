@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from '@emotion/styled';
+import { Provider } from 'react-redux';
 import Router from '../router';
+import store from '../store';
 
 const StyledApp = styled.div`
   background-color: turquoise;
@@ -10,7 +12,9 @@ const StyledApp = styled.div`
 function App() {
   return (
     <StyledApp>
-      <Router />
+      <Provider store={store}>
+        <Router />
+      </Provider>
     </StyledApp>
   );
 }
