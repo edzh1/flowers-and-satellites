@@ -3,9 +3,19 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@emotion/core": "^10.0.14",
+    "@emotion/styled": "^10.0.14",
+    "babel-polyfill": "^6.26.0",
+    "js-base64": "^2.5.1",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
-    "react-scripts": "3.0.1"
+    "react-redux": "^7.1.0",
+    "react-router-dom": "^5.0.1",
+    "react-scripts": "3.0.1",
+    "redux": "^4.0.4",
+    "redux-form": "^8.2.4",
+    "redux-form-saga": "^0.2.0",
+    "redux-saga": "^1.0.5"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -29,10 +39,10 @@
     ]
   },
   "devDependencies": {
-    "eslint": "^6.0.1",
     "eslint-config-prettier": "^6.0.0",
     "eslint-plugin-prettier": "^3.1.0",
     "eslint-plugin-react": "^7.14.2",
-    "prettier": "1.18.2"
+    "prettier": "1.18.2",
+    "prop-types": "^15.7.2"
   }
 }
