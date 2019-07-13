@@ -1,7 +1,7 @@
 import { takeEvery, put, call } from 'redux-saga/effects';
 import { SubmissionError } from 'redux-form';
-import * as actions from '../actions/auth';
-import { LOGOUT } from '../constants/AuthActionTypes';
+import * as actions from '../actions/user';
+import { LOGOUT } from '../constants/ActionTypes';
 import { api } from '../services';
 
 export function* authorize(action) {

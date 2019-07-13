@@ -1,10 +1,10 @@
-import { AUTHORIZE_SUCCESS, LOGOUT } from '../constants/AuthActionTypes';
+import { AUTHORIZE_SUCCESS, LOGOUT } from '../constants/ActionTypes';
 
 const initialState = {
   genericToken: localStorage.getItem('genericToken') || '',
 };
 
-export default function auth(state = initialState, action) {
+export default function user(state = initialState, action) {
   switch (action.type) {
     case AUTHORIZE_SUCCESS:
       return {

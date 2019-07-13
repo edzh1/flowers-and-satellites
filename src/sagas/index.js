@@ -1,5 +1,5 @@
 import { fork, all } from 'redux-saga/effects';
-import { watchAuthorize, watchLogout } from './auth';
+import { watchAuthorize, watchLogout } from './user';
 import formActionSaga from 'redux-form-saga';
 
 export default function* root() {
