@@ -1,11 +1,20 @@
+import { Base64 } from 'js-base64';
+
 export const api = {
-  authorize() {
-    return fetch('http://example.com/movies.json')
-      .then(function(response) {
+  authorize({ login, password }) {
+    const credentials = Base64.encode(`${login}:${password}`);
+
+    return fetch('https://api.cogniac.io/1/token', {
+      method: 'GET',
+      headers: {
+        Authorization: `Basic ${credentials}`,
+      },
+    }).then(response => {
+      if (response.ok) {
         return response.json();
-      })
-      .then(function(myJson) {
-        console.log(JSON.stringify(myJson));
-      });
+      }
+
+      throw new Error('Login failure');
+    });
   },
 };
