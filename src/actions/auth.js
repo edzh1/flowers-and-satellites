@@ -1,13 +1,4 @@
-import { AUTHORIZE, AUTHORIZE_FAILURE } from '../constants/AuthActionTypes';
+import { AUTHORIZE } from '../constants/AuthActionTypes';
+import { createFormAction } from 'redux-form-saga';
 
-export function authorize() {
-  return {
-    type: AUTHORIZE,
-  };
-}
-
-export function authorizeFailure() {
-  return {
-    type: AUTHORIZE_FAILURE,
-  };
-}
+export const authorize = createFormAction(AUTHORIZE);

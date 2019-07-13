@@ -1,7 +1,12 @@
 import React from 'react';
+import AuthForm from '../components/AuthForm';
 
 function AuthContainer() {
-  return <div>auth container</div>;
+  return (
+    <div>
+      <AuthForm />
+    </div>
+  );
 }
 
 export default AuthContainer;

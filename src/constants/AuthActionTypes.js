@@ -1,2 +1,4 @@
 export const AUTHORIZE = 'AUTHORIZE';
+export const AUTHORIZE_SUCCESS = 'AUTHORIZE_SUCCESS';
 export const AUTHORIZE_FAILURE = 'AUTHORIZE_FAILURE';
+export const LOGOUT = 'LOGOUT';
