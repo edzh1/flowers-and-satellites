@@ -20,7 +20,7 @@ class GridContainer extends Component {
 
     return (
       <div>
-        <Grid data={media} />
+        <Grid media={media} />
       </div>
     );
   }

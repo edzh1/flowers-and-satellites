@@ -91,4 +91,20 @@ export const api = {
       throw new Error('Fetch more media failure');
     });
   },
+  getImage({ mediaUrl, accessToken }) {
+    const credentials = `Bearer ${accessToken}`;
+
+    return fetch(`${mediaUrl}`, {
+      method: 'GET',
+      headers: {
+        Authorization: `${credentials}`,
+      },
+    }).then(response => {
+      if (response.ok) {
+        return response.blob();
+      }
+
+      throw new Error('Fetch image failure');
+    });
+  },
 };

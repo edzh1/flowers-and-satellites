@@ -12,7 +12,7 @@ const initialState = {
     id: 'flowers_8hmdag',
     name: '',
     page: 0,
-    limit: 10,
+    limit: 12,
     media: [],
     isLoading: false,
     hasMore: false,
