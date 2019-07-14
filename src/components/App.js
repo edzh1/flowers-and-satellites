@@ -5,7 +5,7 @@ import Router from './Router';
 import store from '../store';
 
 const StyledApp = styled.div`
-  width: 1000px;
+  max-width: 1000px;
   margin: 0 auto;
 `;
 

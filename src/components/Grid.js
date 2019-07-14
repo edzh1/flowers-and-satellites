@@ -2,16 +2,24 @@ import React from 'react';
 import InfiniteScroll from 'react-infinite-scroller';
 import styled from '@emotion/styled';
 import PropTypes from 'prop-types';
+import getImage from '../utils/get-image';
 
-const Cell = props => {
-  return props.hasImage ? (
-    <CellStyled {...props} />
-  ) : (
-    <CellWithoutPicture>
-      <h3>Could not load image</h3>
-    </CellWithoutPicture>
-  );
-};
+class Cell extends React.Component {
+  state = {
+    mediaUrl: {
+      url: '',
+      isLoading: true,
+    },
+  };
+  async componentDidMount() {
+    const mediaUrl = await getImage(this.props.mediaUrl);
+    this.setState({ mediaUrl });
+  }
+
+  render() {
+    return <CellStyled {...this.props} imageUrl={`url(${this.state.mediaUrl.url})`} />;
+  }
+}
 
 const CellStyled = styled.div`
   flex: 1 0 25%;
@@ -28,16 +36,6 @@ const CellStyled = styled.div`
   background-position: center;
 `;
 
-const CellWithoutPicture = styled.div`
-  flex: 1 0 25%;
-  height: 250px;
-  max-width: 25%;
-  justify-content: center;
-  display: flex;
-  box-sizing: border-box;
-  border: 1px solid #9c9c9c;
-`;
-
 function Grid(props) {
   return (
     <InfiniteScroll
@@ -51,15 +49,15 @@ function Grid(props) {
         flexDirection: 'row',
       }}
     >
-      {props.media.map(url => (
-        <Cell key={url} hasImage={!!url} imageUrl={`url(${url})`} />
+      {props.media.map(mediaObj => (
+        <Cell key={mediaObj.media.media_url} mediaUrl={mediaObj.media.media_url} />
       ))}
     </InfiniteScroll>
   );
 }
 
 Cell.propTypes = {
-  hasImage: PropTypes.bool.isRequired,
+  mediaUrl: PropTypes.string.isRequired,
 };
 
 Grid.propTypes = {

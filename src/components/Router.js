@@ -8,7 +8,8 @@ function AppRouter() {
   return (
     <Router>
       <Route path="/" exact component={Auth} />
-      <PrivateRoute path="/grid/" component={Grid} />
+      <PrivateRoute exact path="/grid/" component={Grid} />
+      <PrivateRoute path="/grid/:subjectId" component={Grid} />
     </Router>
   );
 }

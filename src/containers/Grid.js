@@ -10,13 +10,16 @@ class GridContainer extends Component {
     scrollIntervalId: 0,
   };
 
-  async componentDidMount() {
-    const { fetchSubjectMedia, subjectId, tenantToken: accessToken } = this.props;
+  componentDidMount() {
+    const { fetchSubjectMedia, subjectId, limit, tenantToken: accessToken, subjects } = this.props;
+
+    const paramSubjectId = this.props.match.params.subjectId;
+    const isParamSubjectValid = Object.values(subjects).includes(paramSubjectId);
 
     fetchSubjectMedia({
-      subjectId,
+      subjectId: isParamSubjectValid ? paramSubjectId : subjectId,
       accessToken,
-      limit: 20,
+      limit,
     });
 
     this.startAutoscroll();
@@ -34,7 +37,7 @@ class GridContainer extends Component {
     };
 
     setTimeout(() => {
-      const scrollIntervalId = setInterval(autoscroll, 1500);
+      const scrollIntervalId = setInterval(autoscroll, 2000);
       this.setState({ scrollIntervalId });
     }, 2000);
   };
@@ -49,17 +52,16 @@ class GridContainer extends Component {
   };
 
   render() {
-    const { media, hasMore } = this.props;
+    const { media, hasMore, isLoading } = this.props;
 
     return (
-      <div>
-        <Grid
-          media={media}
-          hasMore={hasMore}
-          timestamp={new Date().toString()}
-          onScrollEnd={debounce(this.onScrollEnd, 200)}
-        />
-      </div>
+      <Grid
+        media={media}
+        hasMore={hasMore}
+        timestamp={new Date().toString()}
+        onScrollEnd={debounce(this.onScrollEnd, 200)}
+        isLoading={isLoading}
+      />
     );
   }
 }
@@ -68,10 +70,12 @@ const mapStateToProps = ({ user, tenant }) => ({
   tenantId: user.tenant.tenant_id,
   tenantToken: tenant.accessToken,
   subjectId: tenant.activeSubject.id,
+  subjects: tenant.subjects,
   limit: tenant.activeSubject.limit,
   media: tenant.activeSubject.media,
   paging: tenant.activeSubject.paging,
   hasMore: tenant.activeSubject.hasMore,
+  isLoading: tenant.activeSubject.isLoading,
 });
 
 const mapDispatchToProps = dispatch => {
@@ -97,7 +101,10 @@ GridContainer.propTypes = {
   fetchMoreMedia: PropTypes.func.isRequired,
   limit: PropTypes.number.isRequired,
   paging: PropTypes.object.isRequired,
+  subjects: PropTypes.object.isRequired,
+  match: PropTypes.object.isRequired,
   hasMore: PropTypes.bool.isRequired,
+  isLoading: PropTypes.bool.isRequired,
 };
 
 export default connect(

@@ -94,7 +94,7 @@ export const api = {
   getImage({ mediaUrl, accessToken }) {
     const credentials = `Bearer ${accessToken}`;
 
-    return fetch(`${mediaUrl}`, {
+    return fetch(`${mediaUrl}_max_454`, {
       method: 'GET',
       headers: {
         Authorization: `${credentials}`,

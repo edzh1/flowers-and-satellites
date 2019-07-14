@@ -1,8 +1,7 @@
-import { takeEvery, put, call, all } from 'redux-saga/effects';
+import { takeEvery, put, call } from 'redux-saga/effects';
 import * as actions from '../actions/tenant';
 import { FETCH_SUBJECT_MEDIA_REQUEST, FETCH_MORE_MEDIA_REQUEST } from '../constants/ActionTypes';
 import { api } from '../services';
-import getImage from '../utils/get-image';
 
 export function* auth(action) {
   const { tenantId, genericAccessToken } = action.payload;
@@ -23,10 +22,8 @@ export function* fetchSubjectMedia(action) {
 
   try {
     const mediaResponse = yield call(api.fetchSubjectMedia, { subjectId, accessToken, limit });
-    const mediaDownloads = mediaResponse.data.map(mediaObj => mediaObj.media.media_url);
-    const data = yield all(mediaDownloads.map(mediaUrl => call(getImage, mediaUrl)));
 
-    yield put(actions.fetchSubjectMedia.success({ data, paging: mediaResponse.paging }));
+    yield put(actions.fetchSubjectMedia.success({ data: mediaResponse.data, paging: mediaResponse.paging }));
   } catch (error) {
     yield put(actions.fetchSubjectMedia.failure(error));
   }
@@ -37,10 +34,8 @@ export function* fetchMoreMedia(action) {
 
   try {
     const mediaResponse = yield call(api.fetchMoreMedia, { url, accessToken });
-    const mediaDownloads = mediaResponse.data.map(mediaObj => mediaObj.media.media_url);
-    const data = yield all(mediaDownloads.map(mediaUrl => call(getImage, mediaUrl)));
 
-    yield put(actions.fetchMoreMedia.success({ data, paging: mediaResponse.paging }));
+    yield put(actions.fetchMoreMedia.success({ data: mediaResponse.data, paging: mediaResponse.paging }));
   } catch (error) {
     yield put(actions.fetchMoreMedia.failure(error));
   }
