@@ -3,7 +3,7 @@ import { TENANT_AUTH_SUCCESS, FETCH_SUBJECT_SUCCESS, FETCH_SUBJECT_MEDIA_SUCCESS
 const initialState = {
   id: '',
   name: '',
-  accessToken: '',
+  accessToken: localStorage.getItem('tenantToken') || '',
   subjects: {
     flowers: 'flowers_8hmdag',
     satellite: 'satellite_6etd',

@@ -1,14 +1,16 @@
 import React from 'react';
-import { Field } from 'redux-form';
+import { Form, Field } from 'redux-form';
 import PropTypes from 'prop-types';
 import { auth } from '../actions/user';
 
 const AuthForm = props => {
-  const { handleSubmit, pristine, submitting, error } = props;
-  const submit = handleSubmit(auth);
+  const { handleSubmit, pristine, submitting, error, history } = props;
+  const submit = (values, dispatch) => {
+    dispatch(auth.request({ ...values, history }));
+  };
 
   return (
-    <form onSubmit={submit}>
+    <Form onSubmit={handleSubmit(submit)}>
       <div>
         <label>Authorize</label>
         <div>
@@ -27,7 +29,7 @@ const AuthForm = props => {
         </button>
         <div>{error}</div>
       </div>
-    </form>
+    </Form>
   );
 };
 
@@ -36,6 +38,7 @@ AuthForm.propTypes = {
   pristine: PropTypes.bool.isRequired,
   submitting: PropTypes.bool.isRequired,
   error: PropTypes.string,
+  history: PropTypes.object.isRequired,
 };
 
 export default AuthForm;

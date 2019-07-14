@@ -8,9 +8,9 @@ export const fetchTenants = genericAccessToken => ({
   payload: { genericAccessToken },
 });
 
-fetchTenants.success = tenants => ({
+fetchTenants.success = (tenants, history) => ({
   type: FETCH_TENANTS_SUCCESS,
-  payload: { tenants },
+  payload: { tenants, history },
 });
 
 fetchTenants.failure = () => ({

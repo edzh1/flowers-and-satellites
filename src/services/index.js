@@ -25,7 +25,7 @@ export const api = {
     return fetch(`${API_HOST}/1/users/current/tenants?user_id=current`, {
       method: 'GET',
       headers: {
-        Authorization: `Basic ${credentials}`,
+        Authorization: `${credentials}`,
       },
     }).then(response => {
       if (response.ok) {
@@ -41,7 +41,7 @@ export const api = {
     return fetch(`${API_HOST}/1/token?scope=all&tenant_id=${tenantId}`, {
       method: 'GET',
       headers: {
-        Authorization: `Basic ${credentials}`,
+        Authorization: `${credentials}`,
       },
     }).then(response => {
       if (response.ok) {
@@ -65,7 +65,7 @@ export const api = {
     return fetch(`${API_HOST}/1/subjects/${subjectId}/media?${filter}`, {
       method: 'GET',
       headers: {
-        Authorization: `Basic ${credentials}`,
+        Authorization: `${credentials}`,
       },
     }).then(response => {
       if (response.ok) {

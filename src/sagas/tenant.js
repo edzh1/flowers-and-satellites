@@ -7,8 +7,10 @@ export function* auth(action) {
   const { tenantId, genericAccessToken } = action.payload;
 
   try {
-    const tenantToken = yield call(api.tenantAuth, { tenantId, genericAccessToken });
-    yield put(actions.auth.success({ accessToken: tenantToken }));
+    const tenantResponse = yield call(api.tenantAuth, { tenantId, genericAccessToken });
+    const tenantToken = tenantResponse.access_token;
+    localStorage.setItem('tenantToken', tenantToken);
+    yield put(actions.auth.success(tenantToken));
   } catch (error) {
     yield put(actions.auth.failure(error));
   }
@@ -25,7 +27,7 @@ export function* fetchSubjectMedia(action) {
   }
 }
 
-export function* watchAuth() {
+export function* watchTenantAuth() {
   yield takeEvery(TENANT_AUTH_REQUEST, auth);
 }
 

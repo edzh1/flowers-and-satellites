@@ -2,26 +2,27 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import Auth from '../containers/Auth';
-
-const Users = () => <div>User page</div>;
+import Grid from '../containers/Grid';
 
 function AppRouter() {
   return (
     <Router>
       <Route path="/" exact component={Auth} />
-      <PrivateRoute path="/users/" component={Users} />
+      <PrivateRoute path="/grid/" component={Grid} />
     </Router>
   );
 }
 
 function PrivateRoute({ component: Component, ...rest }) {
   const genericToken = localStorage.getItem('genericToken');
+  const tenantToken = localStorage.getItem('tenantToken');
+  const isAuthorized = genericToken && tenantToken;
 
   return (
     <Route
       {...rest}
       render={props =>
-        genericToken ? (
+        isAuthorized ? (
           <Component {...props} />
         ) : (
           <Redirect
@@ -37,7 +38,7 @@ function PrivateRoute({ component: Component, ...rest }) {
 }
 
 PrivateRoute.propTypes = {
-  component: PropTypes.func.isRequired,
+  component: PropTypes.oneOfType([PropTypes.func, PropTypes.elementType]),
   location: PropTypes.object,
 };
 

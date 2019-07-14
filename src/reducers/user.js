@@ -2,7 +2,9 @@ import { AUTH_SUCCESS, LOGOUT, FETCH_TENANTS_SUCCESS } from '../constants/Action
 
 const initialState = {
   genericToken: localStorage.getItem('genericToken') || '',
-  tenants: [],
+  tenant: {
+    tenant_id: localStorage.getItem('tenantId') || '',
+  },
 };
 
 export default function user(state = initialState, action) {
@@ -15,7 +17,7 @@ export default function user(state = initialState, action) {
     case FETCH_TENANTS_SUCCESS:
       return {
         ...state,
-        tenants: action.payload.tenants,
+        tenant: action.payload.tenants[0],
       };
     case LOGOUT:
       return {
