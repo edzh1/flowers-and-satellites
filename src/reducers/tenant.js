@@ -12,7 +12,7 @@ const initialState = {
     id: 'flowers_8hmdag',
     name: '',
     page: 0,
-    limit: 12,
+    limit: 0,
     media: [],
     isLoading: false,
     hasMore: false,
@@ -34,6 +34,7 @@ export default function user(state = initialState, action) {
           ...state.activeSubject,
           media: [...state.activeSubject.media, ...action.payload.data],
           paging: action.payload.paging,
+          hasMore: action.payload.data.length > 0,
         },
       };
     case FETCH_MORE_MEDIA_SUCCESS:
@@ -43,6 +44,7 @@ export default function user(state = initialState, action) {
           ...state.activeSubject,
           media: [...state.activeSubject.media, ...action.payload.data],
           paging: action.payload.paging,
+          hasMore: action.payload.data.length > 0,
         },
       };
     default:

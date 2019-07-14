@@ -37,7 +37,10 @@ export function* fetchMoreMedia(action) {
 
   try {
     const mediaResponse = yield call(api.fetchMoreMedia, { url, accessToken });
-    yield put(actions.fetchMoreMedia.success(mediaResponse));
+    const mediaDownloads = mediaResponse.data.map(mediaObj => mediaObj.media.media_url);
+    const data = yield all(mediaDownloads.map(mediaUrl => call(getImage, mediaUrl)));
+
+    yield put(actions.fetchMoreMedia.success({ data, paging: mediaResponse.paging }));
   } catch (error) {
     yield put(actions.fetchMoreMedia.failure(error));
   }

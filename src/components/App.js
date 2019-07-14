@@ -5,8 +5,8 @@ import Router from './Router';
 import store from '../store';
 
 const StyledApp = styled.div`
-  background-color: turquoise;
-  padding: 10px;
+  width: 1000px;
+  margin: 0 auto;
 `;
 
 function App() {
