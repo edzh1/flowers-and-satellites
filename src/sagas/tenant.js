@@ -1,6 +1,6 @@
 import { takeEvery, put, call } from 'redux-saga/effects';
 import * as actions from '../actions/tenant';
-import { TENANT_AUTH_REQUEST, FETCH_SUBJECT_MEDIA_REQUEST } from '../constants/ActionTypes';
+import { FETCH_SUBJECT_MEDIA_REQUEST } from '../constants/ActionTypes';
 import { api } from '../services';
 
 export function* auth(action) {
@@ -11,6 +11,7 @@ export function* auth(action) {
     const tenantToken = tenantResponse.access_token;
     localStorage.setItem('tenantToken', tenantToken);
     yield put(actions.auth.success(tenantToken));
+    return tenantToken;
   } catch (error) {
     yield put(actions.auth.failure(error));
   }
@@ -25,10 +26,6 @@ export function* fetchSubjectMedia(action) {
   } catch (error) {
     yield put(actions.fetchSubjectMedia.failure(error));
   }
-}
-
-export function* watchTenantAuth() {
-  yield takeEvery(TENANT_AUTH_REQUEST, auth);
 }
 
 export function* watchFetchSubjectMedia() {

@@ -5,24 +5,25 @@ import * as actions from '../actions/tenant';
 import Grid from '../components/Grid';
 
 class GridContainer extends Component {
-  componentDidMount() {
-    const { tenantId, genericToken } = this.props;
-
-    this.props.authTenant(tenantId, genericToken);
+  async componentDidMount() {
+    // fetchSubjectMedia;
   }
 
   render() {
+    const { media } = this.props;
+
     return (
       <div>
-        <Grid />
+        <Grid data={media} />
       </div>
     );
   }
 }
 
-const mapStateToProps = ({ user }) => ({
+const mapStateToProps = ({ user, tenant }) => ({
   tenantId: user.tenant.tenant_id,
   genericToken: user.genericToken,
+  media: tenant.activeSubject.media,
 });
 
 const mapDispatchToProps = dispatch => {
@@ -35,6 +36,7 @@ GridContainer.propTypes = {
   authTenant: PropTypes.func.isRequired,
   tenantId: PropTypes.string.isRequired,
   genericToken: PropTypes.string.isRequired,
+  media: PropTypes.array.isRequired,
 };
 
 export default connect(

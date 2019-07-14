@@ -1,15 +1,17 @@
 import { takeEvery, put, call } from 'redux-saga/effects';
 import { SubmissionError } from 'redux-form';
-import * as actions from '../actions/user';
+import * as userActions from '../actions/user';
+import * as tenantActions from '../actions/tenant';
 import { LOGOUT, FETCH_TENANTS_REQUEST } from '../constants/ActionTypes';
 import { api } from '../services';
+import { auth as authTenant } from './tenant';
 
 export function* auth({ login, password }) {
   try {
     const response = yield call(api.userAuth, { login, password });
     const genericToken = response.access_token;
     localStorage.setItem('genericToken', genericToken);
-    yield put(actions.auth.success({ genericToken }));
+    yield put(userActions.auth.success({ genericToken }));
 
     return genericToken;
   } catch (error) {
@@ -17,7 +19,7 @@ export function* auth({ login, password }) {
       _error: 'Login failed, please check your credentials and try again',
     });
 
-    yield put(actions.auth.failure(formError));
+    yield put(userActions.auth.failure(formError));
   }
 }
 
@@ -28,27 +30,34 @@ export function* fetchTenants(action) {
     const tenantsResponse = yield call(api.fetchTenants, genericAccessToken);
     const tenants = tenantsResponse.tenants;
     localStorage.setItem('tenantId', tenants[0].tenant_id);
-    yield put(actions.fetchTenants.success(tenants));
+    yield put(userActions.fetchTenants.success(tenants));
 
     return tenants;
   } catch (error) {
-    yield put(actions.fetchTenants.failure(error));
+    yield put(userActions.fetchTenants.failure(error));
   }
 }
 
 export function* authFlow(action) {
   const { login, password, history } = action.payload;
-  const genericToken = yield call(auth, { login, password });
+  const genericAccessToken = yield call(auth, { login, password });
 
-  if (genericToken) {
-    const tenants = yield fetchTenants(actions.fetchTenants(genericToken));
+  if (genericAccessToken) {
+    const tenants = yield fetchTenants(userActions.fetchTenants(genericAccessToken));
+    const tenantId = tenants[0].tenant_id;
 
-    if (tenants) history.push('/grid');
+    if (tenantId) {
+      const tenantToken = yield authTenant(tenantActions.auth({ genericAccessToken, tenantId }));
+
+      if (tenantToken) {
+        history.push('/grid');
+      }
+    }
   }
 }
 
 export function* logout() {
-  yield put(actions.auth.logout());
+  yield put(userActions.auth.logout());
   localStorage.setItem('genericToken', '');
   localStorage.setItem('tenantToken', '');
   localStorage.setItem('tenantId', '');
@@ -59,7 +68,7 @@ export function* watchFetchTenants() {
 }
 
 export function* watchAuth() {
-  yield takeEvery(actions.auth.REQUEST, authFlow);
+  yield takeEvery(userActions.auth.REQUEST, authFlow);
 }
 
 export function* watchLogout() {

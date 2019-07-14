@@ -7,7 +7,7 @@ import {
   FETCH_SUBJECT_MEDIA_FAILURE,
 } from '../constants/ActionTypes';
 
-export const auth = (tenantId, genericAccessToken) => ({
+export const auth = ({ tenantId, genericAccessToken }) => ({
   type: TENANT_AUTH_REQUEST,
   payload: { tenantId, genericAccessToken },
 });
