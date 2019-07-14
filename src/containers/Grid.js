@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { NavLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import debounce from 'lodash/debounce';
 import * as actions from '../actions/tenant';
@@ -26,6 +27,18 @@ class GridContainer extends Component {
   }
 
   componentDidUpdate(prevProps) {
+    if (this.props.match.params.subjectId !== prevProps.match.params.subjectId) {
+      const { fetchSubjectMedia, subjectId, limit, tenantToken: accessToken, subjects } = this.props;
+      const paramSubjectId = this.props.match.params.subjectId;
+      const isParamSubjectValid = Object.values(subjects).includes(paramSubjectId);
+
+      fetchSubjectMedia({
+        subjectId: isParamSubjectValid ? paramSubjectId : subjectId,
+        accessToken,
+        limit,
+      });
+    }
+
     if (this.props.hasMore !== prevProps.hasMore && !this.props.hasMore) {
       this.stopAutoscroll();
     }
@@ -55,13 +68,23 @@ class GridContainer extends Component {
     const { media, hasMore, isLoading } = this.props;
 
     return (
-      <Grid
-        media={media}
-        hasMore={hasMore}
-        timestamp={new Date().toString()}
-        onScrollEnd={debounce(this.onScrollEnd, 200)}
-        isLoading={isLoading}
-      />
+      <div>
+        <header>
+          <p>
+            <NavLink to="/grid/flowers_8hmdag">Flowers</NavLink>
+          </p>
+          <p>
+            <NavLink to="/grid/satellite_6etd">Satellites</NavLink>
+          </p>
+        </header>
+        <Grid
+          media={media}
+          hasMore={hasMore}
+          timestamp={new Date().toString()}
+          onScrollEnd={debounce(this.onScrollEnd, 200)}
+          isLoading={isLoading}
+        />
+      </div>
     );
   }
 }

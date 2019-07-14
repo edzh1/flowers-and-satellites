@@ -8,7 +8,7 @@ function AppRouter() {
   return (
     <Router>
       <Route path="/" exact component={Auth} />
-      <PrivateRoute exact path="/grid/" component={Grid} />
+      <PrivateRoute exact path="/grid" component={Grid} />
       <PrivateRoute path="/grid/:subjectId" component={Grid} />
     </Router>
   );
@@ -17,13 +17,13 @@ function AppRouter() {
 function PrivateRoute({ component: Component, ...rest }) {
   const genericToken = localStorage.getItem('genericToken');
   const tenantToken = localStorage.getItem('tenantToken');
-  const isAuthorized = genericToken && tenantToken;
 
   return (
     <Route
       {...rest}
-      render={props =>
-        isAuthorized ? (
+      render={props => {
+        const isAuthorized = genericToken && tenantToken;
+        return isAuthorized ? (
           <Component {...props} />
         ) : (
           <Redirect
@@ -32,8 +32,8 @@ function PrivateRoute({ component: Component, ...rest }) {
               state: { from: props.location },
             }}
           />
-        )
-      }
+        );
+      }}
     />
   );
 }

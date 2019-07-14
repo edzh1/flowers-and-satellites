@@ -1,4 +1,9 @@
-import { TENANT_AUTH_SUCCESS, FETCH_SUBJECT_MEDIA_SUCCESS, FETCH_MORE_MEDIA_SUCCESS } from '../constants/ActionTypes';
+import {
+  TENANT_AUTH_SUCCESS,
+  FETCH_SUBJECT_MEDIA_SUCCESS,
+  FETCH_MORE_MEDIA_SUCCESS,
+  FETCH_SUBJECT_MEDIA_REQUEST,
+} from '../constants/ActionTypes';
 
 const initialState = {
   id: '',
@@ -26,6 +31,13 @@ export default function user(state = initialState, action) {
       return {
         ...state,
         accessToken: action.payload.accessToken,
+      };
+    case FETCH_SUBJECT_MEDIA_REQUEST:
+      return {
+        ...state,
+        activeSubject: {
+          ...initialState.activeSubject,
+        },
       };
     case FETCH_SUBJECT_MEDIA_SUCCESS:
       return {

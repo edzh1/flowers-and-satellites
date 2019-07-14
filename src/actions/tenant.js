@@ -15,9 +15,9 @@ export const auth = ({ tenantId, genericAccessToken }) => ({
   payload: { tenantId, genericAccessToken },
 });
 
-auth.success = ({ name, accessToken }) => ({
+auth.success = accessToken => ({
   type: TENANT_AUTH_SUCCESS,
-  payload: { name, accessToken },
+  payload: { accessToken },
 });
 
 auth.failure = () => ({

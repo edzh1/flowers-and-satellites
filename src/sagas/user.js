@@ -50,7 +50,7 @@ export function* authFlow(action) {
       const tenantToken = yield authTenant(tenantActions.auth({ genericAccessToken, tenantId }));
 
       if (tenantToken) {
-        history.push('/grid');
+        history.push('/grid/flowers_8hmdag');
       }
     }
   }

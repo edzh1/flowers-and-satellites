@@ -5,7 +5,7 @@ import { auth } from '../actions/user';
 
 const AuthForm = props => {
   const { handleSubmit, pristine, submitting, error, history } = props;
-  const submit = (values, dispatch) => {
+  const submit = async (values, dispatch) => {
     dispatch(auth.request({ ...values, history }));
   };
 
