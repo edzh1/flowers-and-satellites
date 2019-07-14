@@ -1,6 +1,6 @@
-##flowers-and-satellites
+## flowers-and-satellites
 
-##How did I prioritize my work (steps)
+## How did I prioritize my work (steps)
 - Scheme of data flow
 - React app with the ecosystem (redux, sagas, etc)
 - Basic authorization flow
@@ -10,7 +10,7 @@
 - Fetch more media with scroll
 - Data fetching/rendering optimization
 
-##How to run
+## How to run
 ```
   npm i
   npm run build
@@ -20,7 +20,7 @@
 
 You will get information about local port in your terminal.
 
-##What should be added:
+## What should be added:
 * design
 * unit tests
 * e2e tests
