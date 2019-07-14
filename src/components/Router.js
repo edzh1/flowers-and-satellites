@@ -15,13 +15,12 @@ function AppRouter() {
 }
 
 function PrivateRoute({ component: Component, ...rest }) {
-  const genericToken = localStorage.getItem('genericToken');
-  const tenantToken = localStorage.getItem('tenantToken');
-
   return (
     <Route
       {...rest}
       render={props => {
+        const genericToken = localStorage.getItem('genericToken');
+        const tenantToken = localStorage.getItem('tenantToken');
         const isAuthorized = genericToken && tenantToken;
         return isAuthorized ? (
           <Component {...props} />

@@ -14,13 +14,13 @@ const AuthForm = props => {
       <div>
         <label>Authorize</label>
         <div>
-          <Field name="login" component="input" type="text" placeholder="First Name" />
+          <Field name="login" component="input" type="text" placeholder="login" />
         </div>
       </div>
       <div>
         <label>Password</label>
         <div>
-          <Field name="password" component="input" type="password" placeholder="Password" />
+          <Field name="password" component="input" type="password" placeholder="password" />
         </div>
       </div>
       <div>
