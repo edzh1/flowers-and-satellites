@@ -5,6 +5,9 @@ import {
   FETCH_SUBJECT_MEDIA_REQUEST,
   FETCH_SUBJECT_MEDIA_SUCCESS,
   FETCH_SUBJECT_MEDIA_FAILURE,
+  FETCH_MORE_MEDIA_REQUEST,
+  FETCH_MORE_MEDIA_SUCCESS,
+  FETCH_MORE_MEDIA_FAILURE,
 } from '../constants/ActionTypes';
 
 export const auth = ({ tenantId, genericAccessToken }) => ({
@@ -22,17 +25,32 @@ auth.failure = () => ({
   payload: {},
 });
 
-export const fetchSubjectMedia = ({ subjectId, accessToken, page, limit }) => ({
+export const fetchSubjectMedia = ({ subjectId, accessToken, limit }) => ({
   type: FETCH_SUBJECT_MEDIA_REQUEST,
-  payload: { subjectId, accessToken, page, limit },
+  payload: { subjectId, accessToken, limit },
 });
 
-fetchSubjectMedia.success = media => ({
+fetchSubjectMedia.success = ({ data, paging }) => ({
   type: FETCH_SUBJECT_MEDIA_SUCCESS,
-  payload: { media },
+  payload: { data, paging },
 });
 
 fetchSubjectMedia.failure = () => ({
   type: FETCH_SUBJECT_MEDIA_FAILURE,
+  payload: {},
+});
+
+export const fetchMoreMedia = ({ url, accessToken }) => ({
+  type: FETCH_MORE_MEDIA_REQUEST,
+  payload: { url, accessToken },
+});
+
+fetchMoreMedia.success = ({ data, paging }) => ({
+  type: FETCH_MORE_MEDIA_SUCCESS,
+  payload: { data, paging },
+});
+
+fetchMoreMedia.failure = () => ({
+  type: FETCH_MORE_MEDIA_FAILURE,
   payload: {},
 });

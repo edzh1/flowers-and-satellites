@@ -6,7 +6,13 @@ import Grid from '../components/Grid';
 
 class GridContainer extends Component {
   async componentDidMount() {
-    // fetchSubjectMedia;
+    const { fetchSubjectMedia, subjectId, limit, tenantToken: accessToken } = this.props;
+
+    fetchSubjectMedia({
+      subjectId,
+      accessToken,
+      limit,
+    });
   }
 
   render() {
@@ -22,21 +28,36 @@ class GridContainer extends Component {
 
 const mapStateToProps = ({ user, tenant }) => ({
   tenantId: user.tenant.tenant_id,
-  genericToken: user.genericToken,
+  tenantToken: tenant.accessToken,
+  subjectId: tenant.activeSubject.id,
+  limit: tenant.activeSubject.limit,
   media: tenant.activeSubject.media,
+  paging: tenant.activeSubject.paging,
 });
 
 const mapDispatchToProps = dispatch => {
   return {
-    authTenant: (tenantId, genericToken) => dispatch(actions.auth(tenantId, genericToken)),
+    fetchSubjectMedia: ({ subjectId, accessToken, limit }) =>
+      dispatch(
+        actions.fetchSubjectMedia({
+          subjectId,
+          accessToken,
+          limit,
+        }),
+      ),
+    fetchMoreMedia: ({ accessToken, url }) => dispatch(actions.fetchMoreMedia({ accessToken, url })),
   };
 };
 
 GridContainer.propTypes = {
-  authTenant: PropTypes.func.isRequired,
   tenantId: PropTypes.string.isRequired,
-  genericToken: PropTypes.string.isRequired,
+  tenantToken: PropTypes.string.isRequired,
   media: PropTypes.array.isRequired,
+  subjectId: PropTypes.string.isRequired,
+  fetchSubjectMedia: PropTypes.func.isRequired,
+  fetchMoreMedia: PropTypes.func.isRequired,
+  limit: PropTypes.number.isRequired,
+  paging: PropTypes.object.isRequired,
 };
 
 export default connect(

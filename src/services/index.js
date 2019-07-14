@@ -1,4 +1,5 @@
 import { Base64 } from 'js-base64';
+import queryString from 'query-string';
 
 const API_HOST = 'https://api.cogniac.io';
 
@@ -51,16 +52,15 @@ export const api = {
       throw new Error('Tenant auth failure');
     });
   },
-  fetchSubjectMedia({ subjectId, accessToken, page, limit }) {
+  fetchSubjectMedia({ subjectId, accessToken, limit }) {
     const credentials = `Bearer ${accessToken}`;
-    const filter = {
+    const filter = queryString.stringify({
       limit,
-      page,
       probability_lower: 0.5,
       robability_upper: 1,
       reverse: true,
       sort: 'time',
-    };
+    });
 
     return fetch(`${API_HOST}/1/subjects/${subjectId}/media?${filter}`, {
       method: 'GET',
@@ -72,7 +72,23 @@ export const api = {
         return response.json();
       }
 
-      throw new Error('Tenant auth failure');
+      throw new Error('Fetch subject media failure');
+    });
+  },
+  fetchMoreMedia({ url, accessToken }) {
+    const credentials = `Bearer ${accessToken}`;
+
+    return fetch(`${url}`, {
+      method: 'GET',
+      headers: {
+        Authorization: `${credentials}`,
+      },
+    }).then(response => {
+      if (response.ok) {
+        return response.json();
+      }
+
+      throw new Error('Fetch more media failure');
     });
   },
 };

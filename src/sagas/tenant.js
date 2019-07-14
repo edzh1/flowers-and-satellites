@@ -1,6 +1,6 @@
 import { takeEvery, put, call } from 'redux-saga/effects';
 import * as actions from '../actions/tenant';
-import { FETCH_SUBJECT_MEDIA_REQUEST } from '../constants/ActionTypes';
+import { FETCH_SUBJECT_MEDIA_REQUEST, FETCH_MORE_MEDIA_REQUEST } from '../constants/ActionTypes';
 import { api } from '../services';
 
 export function* auth(action) {
@@ -18,16 +18,31 @@ export function* auth(action) {
 }
 
 export function* fetchSubjectMedia(action) {
-  const { subjectId, accessToken, page, limit } = action.payload;
+  const { subjectId, accessToken, limit } = action.payload;
 
   try {
-    const media = yield call(api.fetchSubjectMedia, { subjectId, accessToken, page, limit });
-    yield put(actions.fetchSubjectMedia.success({ media }));
+    const mediaResponse = yield call(api.fetchSubjectMedia, { subjectId, accessToken, limit });
+    yield put(actions.fetchSubjectMedia.success(mediaResponse));
   } catch (error) {
     yield put(actions.fetchSubjectMedia.failure(error));
   }
 }
 
+export function* fetchMoreMedia(action) {
+  const { url, accessToken } = action.payload;
+
+  try {
+    const mediaResponse = yield call(api.fetchMoreMedia, { url, accessToken });
+    yield put(actions.fetchMoreMedia.success(mediaResponse));
+  } catch (error) {
+    yield put(actions.fetchMoreMedia.failure(error));
+  }
+}
+
 export function* watchFetchSubjectMedia() {
   yield takeEvery(FETCH_SUBJECT_MEDIA_REQUEST, fetchSubjectMedia);
+}
+
+export function* watchFetchMoreMedia() {
+  yield takeEvery(FETCH_MORE_MEDIA_REQUEST, fetchMoreMedia);
 }

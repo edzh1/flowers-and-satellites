@@ -1,4 +1,4 @@
-import { TENANT_AUTH_SUCCESS, FETCH_SUBJECT_MEDIA_SUCCESS } from '../constants/ActionTypes';
+import { TENANT_AUTH_SUCCESS, FETCH_SUBJECT_MEDIA_SUCCESS, FETCH_MORE_MEDIA_SUCCESS } from '../constants/ActionTypes';
 
 const initialState = {
   id: '',
@@ -9,13 +9,14 @@ const initialState = {
     satellite: 'satellite_6etd',
   },
   activeSubject: {
-    id: '',
+    id: 'flowers_8hmdag',
     name: '',
     page: 0,
     limit: 10,
     media: [],
     isLoading: false,
     hasMore: false,
+    paging: {},
   },
 };
 
@@ -31,7 +32,17 @@ export default function user(state = initialState, action) {
         ...state,
         activeSubject: {
           ...state.activeSubject,
-          media: [...state.activeSubject.media, action.payload.media],
+          media: [...state.activeSubject.media, ...action.payload.data],
+          paging: action.payload.paging,
+        },
+      };
+    case FETCH_MORE_MEDIA_SUCCESS:
+      return {
+        ...state,
+        activeSubject: {
+          ...state.activeSubject,
+          media: [...state.activeSubject.media, ...action.payload.data],
+          paging: action.payload.paging,
         },
       };
     default:
