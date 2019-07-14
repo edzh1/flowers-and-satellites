@@ -1,4 +1,4 @@
-import { AUTH_SUCCESS, LOGOUT } from '../constants/ActionTypes';
+import { AUTH_SUCCESS, LOGOUT, FETCH_TENANTS_SUCCESS } from '../constants/ActionTypes';
 
 const initialState = {
   genericToken: localStorage.getItem('genericToken') || '',
@@ -11,6 +11,11 @@ export default function user(state = initialState, action) {
       return {
         ...state,
         genericToken: action.payload.genericToken,
+      };
+    case FETCH_TENANTS_SUCCESS:
+      return {
+        ...state,
+        tenants: action.payload.tenants,
       };
     case LOGOUT:
       return {
