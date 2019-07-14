@@ -1,6 +1,9 @@
 import AuthForm from './AuthForm';
 import { reduxForm } from 'redux-form';
+import { withRouter } from 'react-router-dom';
 
-export default reduxForm({
-  form: 'auth',
-})(AuthForm);
+export default withRouter(
+  reduxForm({
+    form: 'auth',
+  })(AuthForm),
+);
