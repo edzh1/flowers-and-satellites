@@ -1,20 +1,28 @@
 import {
   TENANT_AUTH_REQUEST,
   TENANT_AUTH_SUCCESS,
+  TENANT_AUTH_FAILURE,
   FETCH_SUBJECT_REQUEST,
   FETCH_SUBJECT_SUCCESS,
-  FETCH_MORE_SUBJECT_DATA_REQUEST,
-  FETCH_MORE_SUBJECT_DATA_SUCCESS,
+  FETCH_SUBJECT_FAILURE,
+  FETCH_SUBJECT_MEDIA_REQUEST,
+  FETCH_SUBJECT_MEDIA_SUCCESS,
+  FETCH_SUBJECT_MEDIA_FAILURE,
 } from '../constants/ActionTypes';
 
-export const auth = (tenant, genericAccessToken) => ({
+export const auth = (tenantId, genericAccessToken) => ({
   type: TENANT_AUTH_REQUEST,
-  payload: { tenant, genericAccessToken },
+  payload: { tenantId, genericAccessToken },
 });
 
-export const authSuccess = ({ name, accessToken }) => ({
+auth.success = ({ name, accessToken }) => ({
   type: TENANT_AUTH_SUCCESS,
   payload: { name, accessToken },
+});
+
+auth.failure = () => ({
+  type: TENANT_AUTH_FAILURE,
+  payload: {},
 });
 
 export const fetchSubject = (subjectId, accessToken) => ({
@@ -22,17 +30,27 @@ export const fetchSubject = (subjectId, accessToken) => ({
   payload: { subjectId, accessToken },
 });
 
-export const fetchSubjectSuccess = subject => ({
+fetchSubject.success = subject => ({
   type: FETCH_SUBJECT_SUCCESS,
   payload: { subject },
 });
 
-export const fetchMoreSubjectData = ({ subjectId, accessToken, page, limit }) => ({
-  type: FETCH_MORE_SUBJECT_DATA_REQUEST,
+fetchSubject.failure = () => ({
+  type: FETCH_SUBJECT_FAILURE,
+  payload: {},
+});
+
+export const fetchSubjectMedia = ({ subjectId, accessToken, page, limit }) => ({
+  type: FETCH_SUBJECT_MEDIA_REQUEST,
   payload: { subjectId, accessToken, page, limit },
 });
 
-export const fetchMoreSubjectDataSuccess = data => ({
-  type: FETCH_MORE_SUBJECT_DATA_SUCCESS,
-  payload: { data },
+fetchSubjectMedia.success = media => ({
+  type: FETCH_SUBJECT_MEDIA_SUCCESS,
+  payload: { media },
+});
+
+fetchSubjectMedia.failure = () => ({
+  type: FETCH_SUBJECT_MEDIA_FAILURE,
+  payload: {},
 });

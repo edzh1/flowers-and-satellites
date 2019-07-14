@@ -41,7 +41,7 @@ export function* watchFetchTenants() {
   yield takeEvery(FETCH_TENANTS_REQUEST, fetchTenants);
 }
 
-export function* watchAuthorize() {
+export function* watchAuth() {
   yield takeEvery(actions.auth.REQUEST, auth);
 }
 
